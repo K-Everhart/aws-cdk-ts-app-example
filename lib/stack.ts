@@ -8,16 +8,17 @@ export class AwsCdkTestStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    // Commonly used variables as constants 
-    const env = this.node.tryGetContext('environment');
-
     //Print to console the variables used
+    const env = this.node.tryGetContext('environment');
     console.log('Synthing with the following context variables...👉', env);
+    const removalPolicySetting = this.node.tryGetContext(env)['removalPolicy'];
+    const removalPolicy = removalPolicySetting === "DESTROY" ? cdk.RemovalPolicy.DESTROY : cdk.RemovalPolicy.RETAIN;
 
     const bucket = new s3.Bucket(this, 'SampleBucket', {
-      bucketName: `bucket-name-${env}`,
+      bucketName: `bucketname-${env}`,
+      encryption: s3.BucketEncryption.S3_MANAGED,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      encryption: s3.BucketEncryption.S3_MANAGED
+      autoDeleteObjects: this.node.tryGetContext(env)['autoDeleteObjects']
     });
 
     const table = new dynamodb.Table(this, 'SampleTable', {
