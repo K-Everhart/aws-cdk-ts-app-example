@@ -1,0 +1,10 @@
+{
+  "dev": {
+    "bucketName": "test-bucket-982392398j2f9j2-dev",
+    "tableName": "test-table-dev"
+  },
+  "prod": {
+    "bucketName": "test-bucket-982392398j2f9j2-prod",
+    "tableName": "test-table-prod"
+  }
+}
