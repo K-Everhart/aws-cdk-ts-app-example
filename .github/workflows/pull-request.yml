@@ -23,6 +23,10 @@ jobs:
         npm install -g yarn
         yarn
 
+    - name: Test
+      run: |
+        yarn test
+
     - name: CDK Synth
       run: |
         yarn synth:dev
